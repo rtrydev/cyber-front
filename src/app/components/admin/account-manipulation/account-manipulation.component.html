@@ -14,7 +14,11 @@
       <td class="text-white">{{account.firstName}}</td>
       <td class="text-white">{{account.lastName}}</td>
       <td class="text-white">{{account.email}}</td>
-      <td class="text-white"></td>
+      <td class="text-white">
+        <fa-icon (click)="editUser(account.id)" class="p-2 action-icon" [icon]="editIcon"></fa-icon>
+        <fa-icon (click)="deleteUser(account.id)" class="p-2 action-icon" [icon]="deleteIcon"></fa-icon>
+        <fa-icon (click)="blockUser(account.id)" class="p-2 action-icon" [icon]="blockIcon"></fa-icon>
+      </td>
     </tr>
   </tbody>
 </table>

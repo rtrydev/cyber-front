@@ -13,6 +13,7 @@ import { PasswordChangeComponent } from './components/admin/password-change/pass
 import { UserAddComponent } from './components/admin/user-add/user-add.component';
 import { AccountManipulationComponent } from './components/admin/account-manipulation/account-manipulation.component';
 import { PasswordPoliciesComponent } from './components/admin/password-policies/password-policies.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -36,7 +37,8 @@ const routes: Routes = [
     AppRoutingModule,
     RouterModule.forRoot(routes),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   exports: [
     RouterModule
