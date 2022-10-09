@@ -26,7 +26,7 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     this.userService.userData.subscribe(user => {
       this.isAdmin = user && user.role === Roles.Admin || true;
-    })
+    });
   }
 
   selectTab(index: number) {

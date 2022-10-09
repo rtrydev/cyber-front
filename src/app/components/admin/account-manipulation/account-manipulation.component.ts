@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {IUserAccount} from "../../../interfaces/IUserAccount";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-account-manipulation',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountManipulationComponent implements OnInit {
 
-  constructor() { }
+  accounts: IUserAccount[] = [];
+
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.accounts = this.userService.getAccountsList();
   }
 
 }
