@@ -44,4 +44,8 @@ export class UserService {
   getAccountsList() {
     return this.accounts;
   }
+
+  deleteAccount(id: string) {
+
+  }
 }

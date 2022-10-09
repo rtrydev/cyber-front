@@ -27,7 +27,15 @@ export class AccountManipulationComponent implements OnInit {
   }
 
   deleteUser(id: string) {
+    this.userService.deleteAccount(id);
+    const account = this.accounts.find(account => account.id === id);
 
+    if (!account) {
+      return;
+    }
+
+    const index = this.accounts.indexOf(account);
+    this.accounts.splice(index, 1);
   }
 
   blockUser(id: string) {
