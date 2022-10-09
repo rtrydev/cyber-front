@@ -8,9 +8,15 @@ import { FooterComponent } from './components/footer/footer.component';
 import {RouterModule, Routes} from "@angular/router";
 import { LoginComponent } from './components/login/login.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { AdminComponent } from './components/admin/admin.component';
+import { PasswordChangeComponent } from './components/admin/password-change/password-change.component';
+import { UserAddComponent } from './components/admin/user-add/user-add.component';
+import { AccountManipulationComponent } from './components/admin/account-manipulation/account-manipulation.component';
+import { PasswordPoliciesComponent } from './components/admin/password-policies/password-policies.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'admin', component: AdminComponent }
 ];
 
 @NgModule({
@@ -18,7 +24,12 @@ const routes: Routes = [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    AdminComponent,
+    PasswordChangeComponent,
+    UserAddComponent,
+    AccountManipulationComponent,
+    PasswordPoliciesComponent
   ],
   imports: [
     BrowserModule,
