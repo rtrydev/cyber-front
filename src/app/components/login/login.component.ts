@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
+import {timeout} from "rxjs";
+import {UserService} from "../../services/user.service";
+import {ILoginData} from "../../interfaces/ILoginData";
 
 @Component({
   selector: 'app-login',
@@ -8,18 +11,32 @@ import {FormBuilder} from "@angular/forms";
 })
 export class LoginComponent implements OnInit {
 
+  isInvalidEmail = false;
+
   public loginForm = this.formBuilder.group({
-    email: '',
-    password: ''
+    email: ['', Validators.compose([Validators.required, Validators.email])],
+    password: ['', Validators.required]
   })
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
   }
 
   submit() {
+    if (!this.loginForm.get('email')?.valid) {
+      this.isInvalidEmail = true;
+      return;
+    }
 
+    const loginData = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value
+    } as ILoginData;
+
+    this.userService.login(loginData);
+
+    this.loginForm.reset();
   }
 
 }
