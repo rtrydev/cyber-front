@@ -44,7 +44,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - main
           context: DOCKER_HUB
       - azure-deploy:
           context: AZURE
