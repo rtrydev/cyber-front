@@ -17,10 +17,32 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+          
+  build-dockerhub:
+    docker:
+      - image: cimg/base:2022.06
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - setup_remote_docker:
+          version: 20.10.14
+      - checkout
+      - run: |
+          docker build -t braght/cyber-front .
+      - run: |
+          echo "$DOCKERHUB_PASSWORD" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+      - run: |
+          docker push braght/cyber-front
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
+      - build-dockerhub:
+          filters:
+            branches:
+              only:
+                - master
+          context: DOCKER_HUB
