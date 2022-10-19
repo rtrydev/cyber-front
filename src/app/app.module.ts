@@ -14,7 +14,8 @@ import { UserAddComponent } from './components/admin/user-add/user-add.component
 import { AccountManipulationComponent } from './components/admin/account-manipulation/account-manipulation.component';
 import { PasswordPoliciesComponent } from './components/admin/password-policies/password-policies.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthInterceptorService} from "./auth/auth-interceptor";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -45,7 +46,7 @@ const routes: Routes = [
   exports: [
     RouterModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -34,9 +34,7 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.get('password')?.value
     } as ILoginData;
 
-    this.userService.login(loginData).subscribe(x => {
-      console.log(x);
-    });
+    this.userService.login(loginData);
 
     this.loginForm.reset();
   }

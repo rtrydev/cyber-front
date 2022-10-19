@@ -15,31 +15,54 @@ export class UserService {
   userData: BehaviorSubject<IUserData | null>;
   apiUrl = environment.apiUrl;
 
-  accounts: IUserAccount[] = [
-    {id: 'test1', userName: 'user1', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: false},
-    {id: 'test2', userName: 'user2', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: false},
-    {id: 'test3', userName: 'user3', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: true},
-    {id: 'test4', userName: 'user4', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: false},
-    {id: 'test5', userName: 'user5', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: false},
-    {id: 'test6', userName: 'user6', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: true},
-    {id: 'test7', userName: 'user7', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: false},
-    {id: 'test8', userName: 'user8', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: false},
-    {id: 'test9', userName: 'user9', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: false},
-  ]
-
   constructor(private httpClient: HttpClient) {
     this.userData = new BehaviorSubject<IUserData | null>(null);
   }
 
   login(loginData: ILoginData) {
-    return this.httpClient.post(`${this.apiUrl}/Users/Login`, loginData, {responseType: 'text'})
+    this.httpClient.post(`${this.apiUrl}/Users/Login`, loginData, {responseType: 'text'})
+      .subscribe(token => {
+        const parsedJwt = this.parseJwt(token);
+
+        const user = {
+          id: parsedJwt.UserId,
+          token: token,
+          role: parsedJwt.role
+        } as IUserData;
+
+        localStorage.setItem("user", JSON.stringify(user));
+
+        this.userData.next(user);
+      })
+  }
+
+  loginFromToken() {
+    const userString = localStorage.getItem("user");
+
+    if (!userString) {
+      return;
+    }
+
+    const user = JSON.parse(userString);
+
+    this.userData.next(user as IUserData);
   }
 
   getAccountsList() {
-    return this.accounts;
+    return this.httpClient.get(`${this.apiUrl}/Users`);
   }
 
   deleteAccount(id: string) {
 
   }
+
+  private parseJwt (token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+  };
 }

@@ -19,7 +19,11 @@ export class AccountManipulationComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.accounts = this.userService.getAccountsList();
+    this.userService.getAccountsList()
+      .subscribe(accounts => {
+        console.log(accounts);
+        this.accounts = accounts as IUserAccount[];
+      });
   }
 
   editUser(id: string) {

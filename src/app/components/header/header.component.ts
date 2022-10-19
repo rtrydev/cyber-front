@@ -23,10 +23,13 @@ export class HeaderComponent implements OnInit {
         this.isAdmin = true;
       }
     });
+
+    this.userService.loginFromToken();
   }
 
   logout() {
     this.userService.userData.next(null);
+    localStorage.removeItem("user");
   }
 
 }
