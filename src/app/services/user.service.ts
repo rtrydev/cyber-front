@@ -6,6 +6,7 @@ import {Roles} from "../enums/roles";
 import {IUserAccount} from "../interfaces/IUserAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from '../../environments/environment'
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class UserService {
   userData: BehaviorSubject<IUserData | null>;
   apiUrl = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router: Router) {
     this.userData = new BehaviorSubject<IUserData | null>(null);
   }
 
@@ -46,6 +47,12 @@ export class UserService {
     const user = JSON.parse(userString);
 
     this.userData.next(user as IUserData);
+  }
+
+  logout() {
+    this.userData.next(null);
+    localStorage.removeItem("user");
+    this.router.navigate(['/login']);
   }
 
   getAccountsList() {
