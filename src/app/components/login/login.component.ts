@@ -30,11 +30,13 @@ export class LoginComponent implements OnInit {
     }
 
     const loginData = {
-      email: this.loginForm.get('email')?.value,
+      login: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value
     } as ILoginData;
 
-    this.userService.login(loginData);
+    this.userService.login(loginData).subscribe(x => {
+      console.log(x);
+    });
 
     this.loginForm.reset();
   }

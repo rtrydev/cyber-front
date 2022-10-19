@@ -4,6 +4,8 @@ import {IUserData} from "../interfaces/IUserData";
 import {BehaviorSubject} from "rxjs";
 import {Roles} from "../enums/roles";
 import {IUserAccount} from "../interfaces/IUserAccount";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {environment} from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,7 @@ import {IUserAccount} from "../interfaces/IUserAccount";
 export class UserService {
 
   userData: BehaviorSubject<IUserData | null>;
+  apiUrl = environment.apiUrl;
 
   accounts: IUserAccount[] = [
     {id: 'test1', userName: 'user1', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: false},
@@ -24,21 +27,12 @@ export class UserService {
     {id: 'test9', userName: 'user9', firstName: 'Jan', lastName: 'Kowalski', email: 'a@a.com', isBlocked: false},
   ]
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     this.userData = new BehaviorSubject<IUserData | null>(null);
   }
 
   login(loginData: ILoginData) {
-    console.log(loginData);
-
-    const someUser = {
-      id: 'test',
-      role: Roles.Admin,
-      token: 'some-jwt'
-    } as IUserData;
-
-
-    this.userData.next(someUser);
+    return this.httpClient.post(`${this.apiUrl}/Users/Login`, loginData, {responseType: 'text'})
   }
 
   getAccountsList() {
