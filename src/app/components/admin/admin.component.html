@@ -1,0 +1,21 @@
+<div *ngIf="!isAdmin" class="col-10 center text-center p-3">
+  <h3 class="text-white">
+    You don't have permission to view this site!!
+  </h3>
+</div>
+<div *ngIf="isAdmin" class="col-10 center text-center p-3">
+  <h3 class="text-white pb-3">
+    Admin panel
+  </h3>
+  <ul class="nav nav-tabs d-flex justify-content-center">
+    <li *ngFor="let tab of adminTabs; let i = index" class="nav-item">
+      <a class="nav-link tab-btn" (click)="selectTab(i)" [ngClass]="tab.active ? 'active' : ''">{{tab.title}}</a>
+    </li>
+  </ul>
+  <div [ngSwitch]="selectedTab">
+    <app-account-manipulation *ngSwitchCase="'ACCOUNT_MANIPULATION'"></app-account-manipulation>
+    <app-password-change *ngSwitchCase="'PASSWORD_CHANGE'"></app-password-change>
+    <app-password-policies *ngSwitchCase="'PASSWORD_POLICIES'"></app-password-policies>
+    <app-user-add *ngSwitchCase="'USER_ADD'"></app-user-add>
+  </div>
+</div>
