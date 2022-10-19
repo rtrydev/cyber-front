@@ -46,7 +46,3 @@ workflows:
               only:
                 - main
           context: DOCKER_HUB
-      - azure-deploy:
-          context: AZURE
-          requires:
-            - build-dockerhub
