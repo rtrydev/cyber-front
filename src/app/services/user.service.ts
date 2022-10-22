@@ -7,6 +7,7 @@ import {IUserAccount} from "../interfaces/IUserAccount";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from '../../environments/environment'
 import {Router} from "@angular/router";
+import {IUserCreateData} from "../interfaces/IUserCreateData";
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +58,10 @@ export class UserService {
 
   getAccountsList() {
     return this.httpClient.get(`${this.apiUrl}/Users`);
+  }
+
+  addAccount(user: IUserCreateData) {
+    return this.httpClient.post(`${this.apiUrl}/Users/Add`, user);
   }
 
   deleteAccount(id: string) {
