@@ -71,7 +71,7 @@ jobs:
       - restore_cache:
           key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
       - run: npm install
-      - run: npm i @angular/cli
+      - run: npm i --prefix=$HOME/.local --global @angular/cli
       - save_cache:
           key: ng-project-{{ .Branch }}-{{ checksum "package-lock.json" }}
           paths:
