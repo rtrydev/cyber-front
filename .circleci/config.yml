@@ -41,7 +41,9 @@ jobs:
       steps:
         - checkout
         - run: |
-            npm run build
+            npm install
+        - run: |
+            ng build
 
   lint:
       docker:
@@ -49,7 +51,9 @@ jobs:
       steps:
         - checkout
         - run: |
-            npm run lint
+            npm install
+        - run: |
+            ng lint
 
   test:
     working_directory: ~/cyber-front
