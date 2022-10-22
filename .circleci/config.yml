@@ -36,7 +36,7 @@ jobs:
 
   build:
       docker:
-        - image: cimg/node:current
+        - image: circleci/node
       steps:
         - checkout
         - run: | 
@@ -46,7 +46,7 @@ jobs:
 
   lint:
       docker:
-        - image: cimg/node:current
+        - image: circleci/node
       steps:
         - checkout
         - run: | 
