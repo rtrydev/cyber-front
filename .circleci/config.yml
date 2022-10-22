@@ -40,8 +40,8 @@ jobs:
         - image: circleci/node
       steps:
         - checkout
-        - run: |
-            npm install
+        - run: npm install
+        - run: npm i --prefix=$HOME/.local --global @angular/cli
         - run: |
             ng build
 
@@ -50,8 +50,8 @@ jobs:
         - image: circleci/node
       steps:
         - checkout
-        - run: |
-            npm install
+        - run: npm install
+        - run: npm i --prefix=$HOME/.local --global @angular/cli
         - run: |
             ng lint
 
