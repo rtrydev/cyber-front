@@ -34,15 +34,38 @@ jobs:
           az container create --resource-group cyber-rg --name cyber-front-container --image braght/cyber-front:latest --dns-name-label cyber-front --ports 80 \
           --environment-variables 'Api_Address'=$Api_Address
 
+  build:
+      docker:
+        - image: cimg/node:current
+      steps:
+        - checkout
+        - run: | 
+            npm i -g @angular/cli
+        - run: |
+            ng build
+
+  lint:
+      docker:
+        - image: cimg/node:current
+      steps:
+        - checkout
+        - run: | 
+            npm i -g @angular/cli
+        - run: |
+            ng lint
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   cyber-frontend-build-deploy-workflow:
     jobs:
+      - build
+      - lint
       - build-dockerhub:
           filters:
             branches:
               only:
                 - main
           context: DOCKER_HUB
+          requires:
+            - build
