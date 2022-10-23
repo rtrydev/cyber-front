@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from "@angular/forms";
+import {UserService} from "../../../services/user.service";
+import {Roles} from "../../../enums/roles";
 
 @Component({
   selector: 'app-password-change',
@@ -7,9 +10,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PasswordChangeComponent implements OnInit {
 
-  constructor() { }
+  public passwordChangeForm = this.formBuilder.group({
+    password: ['', Validators.required],
+    passwordRepeat: ['', Validators.required]
+  })
+
+  passwordChangeRequired = false;
+
+  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.userData.subscribe(user => {
+      this.passwordChangeRequired = user?.role === Roles.PasswordChangeRequired;
+    })
+  }
+
+  submit() {
+    if (!this.passwordChangeForm.get('password')?.valid
+      && !(this.passwordChangeForm.get('password') === this.passwordChangeForm.get('passwordRepeat'))) {
+      return;
+    }
+
+    const newPassword = this.passwordChangeForm.get('password')?.value
+
+    this.userService.changePassword(newPassword);
+
+    this.passwordChangeForm.reset();
   }
 
 }

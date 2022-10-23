@@ -56,6 +56,10 @@ export class UserService {
     this.router.navigate(['/login']);
   }
 
+  changePassword(password: string) {
+    return this.httpClient.post(`${this.apiUrl}/Users/ChangePassword`, {newPassword: password});
+  }
+
   getAccountsList() {
     return this.httpClient.get(`${this.apiUrl}/Users`);
   }
