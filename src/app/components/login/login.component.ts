@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ILoginData} from "../../interfaces/ILoginData";
+import {stat} from "fs";
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import {ILoginData} from "../../interfaces/ILoginData";
 export class LoginComponent implements OnInit {
 
   isInvalidEmail = false;
+  expired = false;
 
   public loginForm = this.formBuilder.group({
     login: ['', Validators.required],
@@ -20,6 +22,9 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.userStatus.subscribe(status => {
+      this.expired = status === 'expired';
+    })
   }
 
   submit() {
@@ -36,6 +41,10 @@ export class LoginComponent implements OnInit {
     this.userService.login(loginData);
 
     this.loginForm.reset();
+  }
+
+  resetPassword() {
+    console.log('test');
   }
 
 }

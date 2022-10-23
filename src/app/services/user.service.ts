@@ -15,10 +15,12 @@ import {IUserCreateData} from "../interfaces/IUserCreateData";
 export class UserService {
 
   userData: BehaviorSubject<IUserData | null>;
+  userStatus: BehaviorSubject<string | null>;
   apiUrl = environment.apiUrl;
 
   constructor(private httpClient: HttpClient, private router: Router) {
     this.userData = new BehaviorSubject<IUserData | null>(null);
+    this.userStatus = new BehaviorSubject<string | null>(null);
   }
 
   login(loginData: ILoginData) {
@@ -35,6 +37,10 @@ export class UserService {
         localStorage.setItem("user", JSON.stringify(user));
 
         this.userData.next(user);
+      },error => {
+        if (error.status === 401) {
+          this.userStatus.next('expired');
+        }
       })
   }
 
