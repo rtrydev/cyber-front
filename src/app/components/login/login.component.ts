@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
-import {timeout} from "rxjs";
 import {UserService} from "../../services/user.service";
 import {ILoginData} from "../../interfaces/ILoginData";
 
@@ -14,7 +13,7 @@ export class LoginComponent implements OnInit {
   isInvalidEmail = false;
 
   public loginForm = this.formBuilder.group({
-    email: ['', Validators.compose([Validators.required, Validators.email])],
+    login: ['', Validators.required],
     password: ['', Validators.required]
   })
 
@@ -24,13 +23,13 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    if (!this.loginForm.get('email')?.valid) {
+    if (!this.loginForm.get('login')?.valid) {
       this.isInvalidEmail = true;
       return;
     }
 
     const loginData = {
-      login: this.loginForm.get('email')?.value,
+      login: this.loginForm.get('login')?.value,
       password: this.loginForm.get('password')?.value
     } as ILoginData;
 
