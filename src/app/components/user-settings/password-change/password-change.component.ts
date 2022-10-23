@@ -33,7 +33,7 @@ export class PasswordChangeComponent implements OnInit {
 
     const newPassword = this.passwordChangeForm.get('password')?.value
 
-    this.userService.changePassword(newPassword);
+    this.userService.changePassword(newPassword).subscribe();
 
     this.passwordChangeForm.reset();
   }
