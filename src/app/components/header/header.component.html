@@ -16,6 +16,9 @@
           <a class="nav-link" routerLink="/admin">Admin</a>
         </li>
         <li *ngIf="userRole" class="nav-item">
+          <a class="nav-link" routerLink="/user-settings">User Settings</a>
+        </li>
+        <li *ngIf="userRole" class="nav-item">
           <a (click)="logout()" style="cursor: pointer" class="nav-link">Logout</a>
         </li>
       </ul>

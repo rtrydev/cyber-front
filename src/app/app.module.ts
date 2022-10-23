@@ -9,17 +9,19 @@ import {RouterModule, Routes} from "@angular/router";
 import { LoginComponent } from './components/login/login.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AdminComponent } from './components/admin/admin.component';
-import { PasswordChangeComponent } from './components/admin/password-change/password-change.component';
+import { PasswordChangeComponent } from './components/user-settings/password-change/password-change.component';
 import { UserAddComponent } from './components/admin/user-add/user-add.component';
 import { AccountManipulationComponent } from './components/admin/account-manipulation/account-manipulation.component';
 import { PasswordPoliciesComponent } from './components/admin/password-policies/password-policies.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptorService} from "./auth/auth-interceptor";
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'admin', component: AdminComponent }
+  { path: 'admin', component: AdminComponent },
+  { path: 'user-settings', component: UserSettingsComponent }
 ];
 
 @NgModule({
@@ -32,7 +34,8 @@ const routes: Routes = [
     PasswordChangeComponent,
     UserAddComponent,
     AccountManipulationComponent,
-    PasswordPoliciesComponent
+    PasswordPoliciesComponent,
+    UserSettingsComponent
   ],
   imports: [
     BrowserModule,

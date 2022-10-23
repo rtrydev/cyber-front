@@ -14,7 +14,6 @@
   </ul>
   <div [ngSwitch]="selectedTab">
     <app-account-manipulation *ngSwitchCase="'ACCOUNT_MANIPULATION'"></app-account-manipulation>
-    <app-password-change *ngSwitchCase="'PASSWORD_CHANGE'"></app-password-change>
     <app-password-policies *ngSwitchCase="'PASSWORD_POLICIES'"></app-password-policies>
     <app-user-add *ngSwitchCase="'USER_ADD'"></app-user-add>
   </div>
