@@ -5,7 +5,7 @@ import {Component, Input, OnInit} from '@angular/core';
   templateUrl: './article-header.component.html',
   styleUrls: ['./article-header.component.scss']
 })
-export class ArticleHeaderComponent implements OnInit {
+export class ArticleHeaderComponent {
 
   @Input()
   articleTitle: string = ""
@@ -14,8 +14,5 @@ export class ArticleHeaderComponent implements OnInit {
   articleImage: string = ""
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

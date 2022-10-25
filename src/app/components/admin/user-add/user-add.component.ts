@@ -8,7 +8,7 @@ import {IUserCreateData} from "../../../interfaces/IUserCreateData";
   templateUrl: './user-add.component.html',
   styleUrls: ['./user-add.component.scss']
 })
-export class UserAddComponent implements OnInit {
+export class UserAddComponent {
 
   isInvalidEmail = false;
   addSuccess = false;
@@ -21,9 +21,6 @@ export class UserAddComponent implements OnInit {
   })
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) { }
-
-  ngOnInit(): void {
-  }
 
   submit() {
     if (!this.addUserForm.get('email')?.valid) {

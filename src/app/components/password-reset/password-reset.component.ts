@@ -7,16 +7,13 @@ import {UserService} from "../../services/user.service";
   templateUrl: './password-reset.component.html',
   styleUrls: ['./password-reset.component.scss']
 })
-export class PasswordResetComponent implements OnInit {
+export class PasswordResetComponent {
 
   public passwordResetForm = this.formBuilder.group({
     email: ['', Validators.compose([Validators.required, Validators.email])],
   })
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) { }
-
-  ngOnInit(): void {
-  }
 
   submit() {
     if (!this.passwordResetForm.get('email')?.valid) {
