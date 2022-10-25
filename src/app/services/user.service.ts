@@ -87,7 +87,7 @@ export class UserService {
   }
 
   deleteAccount(id: string) {
-
+    return this.httpClient.delete(`${this.apiUrl}/Users`, {body: {userId: id}});
   }
 
   private parseJwt (token: string) {

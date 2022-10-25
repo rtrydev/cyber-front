@@ -39,8 +39,10 @@ export class AccountManipulationComponent implements OnInit {
       return;
     }
 
-    const index = this.accounts.indexOf(account);
-    this.accounts.splice(index, 1);
+    this.userService.deleteAccount(id).subscribe(res => {
+      const index = this.accounts.indexOf(account);
+      this.accounts.splice(index, 1);
+    })
   }
 
   blockUser(id: string) {
