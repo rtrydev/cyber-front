@@ -20,6 +20,7 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { HomeComponent } from './components/home/home.component';
 import { ArticleHeaderComponent } from './components/home/article-header/article-header.component';
+import { UserEditComponent } from './components/admin/user-edit/user-edit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -43,7 +44,8 @@ const routes: Routes = [
     UserSettingsComponent,
     PasswordResetComponent,
     HomeComponent,
-    ArticleHeaderComponent
+    ArticleHeaderComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

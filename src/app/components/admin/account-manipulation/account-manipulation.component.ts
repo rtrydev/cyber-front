@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {IUserAccount} from "../../../interfaces/IUserAccount";
 import {UserService} from "../../../services/user.service";
 import {faBan, faCheck, faDeleteLeft, faEdit, faRemove, faTrashCan} from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,9 @@ import {faBan, faCheck, faDeleteLeft, faEdit, faRemove, faTrashCan} from "@forta
   styleUrls: ['./account-manipulation.component.scss']
 })
 export class AccountManipulationComponent implements OnInit {
+
+  @Output()
+  userEditVisible = new EventEmitter<{visible: boolean, user: IUserAccount | null}>();
 
   editIcon = faEdit;
   deleteIcon = faTrashCan;
@@ -26,8 +29,8 @@ export class AccountManipulationComponent implements OnInit {
       });
   }
 
-  editUser(id: string) {
-
+  editUser(user: IUserAccount) {
+    this.userEditVisible.emit({visible: true, user});
   }
 
   deleteUser(id: string) {

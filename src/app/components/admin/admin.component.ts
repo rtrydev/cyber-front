@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Roles} from "../../enums/roles";
+import {IUserAccount} from "../../interfaces/IUserAccount";
 
 @Component({
   selector: 'app-admin',
@@ -8,6 +9,8 @@ import {Roles} from "../../enums/roles";
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  userEditVisible: boolean = false;
+  userForEdit: IUserAccount | null = null;
 
   adminTabs = [
     {id: 'USER_ADD', title: 'Add user', active: false},
@@ -35,6 +38,11 @@ export class AdminComponent implements OnInit {
 
     this.adminTabs[index].active = true;
     this.selectedTab = this.adminTabs[index].id;
+  }
+
+  showUserEdit(event: {visible: boolean, user: IUserAccount | null}) {
+    this.userEditVisible = event.visible;
+    this.userForEdit = event.user;
   }
 
 }

@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Roles} from "../../enums/roles";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
+import {IUserAccount} from "../../interfaces/IUserAccount";
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,9 @@ import {Router} from "@angular/router";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
+  @Output()
+  loginVisible = new EventEmitter<{visible: boolean, user: IUserAccount | null}>();
 
   userRole: Roles | null = null;
   isAdmin = false;
