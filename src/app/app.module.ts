@@ -18,8 +18,11 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptorService} from "./auth/auth-interceptor";
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { HomeComponent } from './components/home/home.component';
+import { ArticleHeaderComponent } from './components/home/article-header/article-header.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'user-settings', component: UserSettingsComponent },
@@ -38,7 +41,9 @@ const routes: Routes = [
     AccountManipulationComponent,
     PasswordPoliciesComponent,
     UserSettingsComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    HomeComponent,
+    ArticleHeaderComponent
   ],
   imports: [
     BrowserModule,
