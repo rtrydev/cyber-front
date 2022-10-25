@@ -8,6 +8,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from '../../environments/environment'
 import {Router} from "@angular/router";
 import {IUserCreateData} from "../interfaces/IUserCreateData";
+import {IUserEditData} from "../interfaces/IUserEditData";
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +89,10 @@ export class UserService {
 
   deleteAccount(id: string) {
     return this.httpClient.delete(`${this.apiUrl}/Users`, {body: {userId: id}});
+  }
+
+  editAccount(user: IUserEditData) {
+    return this.httpClient.put(`${this.apiUrl}/Users`, user);
   }
 
   private parseJwt (token: string) {

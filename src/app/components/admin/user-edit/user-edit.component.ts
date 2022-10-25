@@ -1,7 +1,8 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {IUserAccount} from "../../../interfaces/IUserAccount";
-import {HttpClient} from "@angular/common/http";
+import {UserService} from "../../../services/user.service";
+import {IUserEditData} from "../../../interfaces/IUserEditData";
 
 @Component({
   selector: 'app-user-edit',
@@ -23,7 +24,7 @@ export class UserEditComponent implements OnInit, AfterViewInit {
   @Output()
   visibilityChanged = new EventEmitter<{visible: boolean, user: IUserAccount | null}>();
 
-  constructor(private formBuilder: FormBuilder, private httpClient: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -40,6 +41,18 @@ export class UserEditComponent implements OnInit, AfterViewInit {
   }
 
   submit() {
+    const user = {
+      userId: this.user?.userId,
+      email: this.editUserForm.get('email')?.value,
+      username: this.editUserForm.get('username')?.value,
+      firstName: this.editUserForm.get('firstName')?.value,
+      lastName: this.editUserForm.get('lastName')?.value,
+    } as IUserEditData;
+
+    this.userService.editAccount(user)
+      .subscribe(user => {
+        console.log(user);
+      });
   }
 
 }

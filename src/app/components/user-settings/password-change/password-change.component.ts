@@ -26,8 +26,15 @@ export class PasswordChangeComponent implements OnInit {
   }
 
   submit() {
-    if (!this.passwordChangeForm.get('password')?.valid
-      && !(this.passwordChangeForm.get('password') === this.passwordChangeForm.get('passwordRepeat'))) {
+    if (!this.passwordChangeForm.get('password')?.valid) {
+      return;
+    }
+
+    if (!this.passwordChangeForm.get('passwordRepeat')?.valid) {
+      return;
+    }
+
+    if (!(this.passwordChangeForm.get('password')?.value === this.passwordChangeForm.get('passwordRepeat')?.value)) {
       return;
     }
 
