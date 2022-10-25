@@ -1,8 +1,6 @@
-export interface IUserAccount {
-  userId: string;
+export interface IUserCreateData {
   username: string;
   firstName: string;
   lastName: string;
   email: string;
-  isBlocked: boolean;
 }

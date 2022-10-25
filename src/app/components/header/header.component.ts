@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Roles} from "../../enums/roles";
 import {UserService} from "../../services/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -20,8 +20,14 @@ export class HeaderComponent implements OnInit {
       this.isAdmin = false;
 
       this.userRole = user?.role ?? null;
+
       if (this.userRole && this.userRole === Roles.Admin) {
         this.isAdmin = true;
+      }
+
+      if (this.userRole && this.userRole === Roles.PasswordChangeRequired) {
+        this.router.navigate(['/user-settings']);
+        return;
       }
       this.router.navigate(['/']);
     });

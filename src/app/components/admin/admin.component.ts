@@ -10,13 +10,12 @@ import {Roles} from "../../enums/roles";
 export class AdminComponent implements OnInit {
 
   adminTabs = [
-    {id: 'PASSWORD_CHANGE', title: 'Change password', active: true},
     {id: 'USER_ADD', title: 'Add user', active: false},
-    {id: 'ACCOUNT_MANIPULATION', title: 'Manipulate accounts', active: false},
+    {id: 'ACCOUNT_MANIPULATION', title: 'Manipulate accounts', active: true},
     {id: 'PASSWORD_POLICIES', title: 'Password policies', active: false}
   ];
 
-  selectedTab = 'PASSWORD_CHANGE';
+  selectedTab = 'ACCOUNT_MANIPULATION';
 
   isAdmin = false;
 
