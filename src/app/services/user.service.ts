@@ -19,9 +19,12 @@ export class UserService {
   userStatus: BehaviorSubject<string | null>;
   apiUrl = environment.apiUrl;
 
+  userUpdated: BehaviorSubject<IUserAccount | null>
+
   constructor(private httpClient: HttpClient, private router: Router) {
     this.userData = new BehaviorSubject<IUserData | null>(null);
     this.userStatus = new BehaviorSubject<string | null>(null);
+    this.userUpdated = new BehaviorSubject<IUserAccount | null>(null);
   }
 
   login(loginData: ILoginData) {

@@ -51,7 +51,8 @@ export class UserEditComponent implements OnInit, AfterViewInit {
 
     this.userService.editAccount(user)
       .subscribe(user => {
-        console.log(user);
+        this.userService.userUpdated.next(user as IUserAccount);
+        this.closeEdit();
       });
   }
 

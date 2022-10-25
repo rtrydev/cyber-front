@@ -27,6 +27,20 @@ export class AccountManipulationComponent implements OnInit {
       .subscribe(accounts => {
         this.accounts = accounts as IUserAccount[];
       });
+
+    this.userService.userUpdated
+      .subscribe(user => {
+        const index = this.accounts.findIndex(u => u.userId === user?.userId);
+        const userToModify = this.accounts[index];
+
+        this.accounts[index] = {
+          ...userToModify,
+          username: user?.username || userToModify.username,
+          firstName: user?.firstName || userToModify.firstName,
+          lastName: user?.lastName || userToModify.lastName,
+          email: user?.email || userToModify.email,
+        }
+      })
   }
 
   editUser(user: IUserAccount) {
