@@ -17,11 +17,13 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptorService} from "./auth/auth-interceptor";
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'user-settings', component: UserSettingsComponent }
+  { path: 'user-settings', component: UserSettingsComponent },
+  { path: 'password-reset', component: PasswordResetComponent }
 ];
 
 @NgModule({
@@ -35,7 +37,8 @@ const routes: Routes = [
     UserAddComponent,
     AccountManipulationComponent,
     PasswordPoliciesComponent,
-    UserSettingsComponent
+    UserSettingsComponent,
+    PasswordResetComponent
   ],
   imports: [
     BrowserModule,

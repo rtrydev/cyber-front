@@ -66,6 +66,10 @@ export class UserService {
     return this.httpClient.post(`${this.apiUrl}/Users/ChangePassword`, {newPassword: password});
   }
 
+  resetPassword(email: string) {
+    return this.httpClient.post(`${this.apiUrl}/Users/ResetPassword?email=${email}`, {});
+  }
+
   getAccountsList() {
     return this.httpClient.get(`${this.apiUrl}/Users`);
   }

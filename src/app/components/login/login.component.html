@@ -18,7 +18,7 @@
     <div *ngIf="expired" class="text-center mt-3">
       <div style="color: red">
         Your password expired.
-        <a class="password-reset-link" style="cursor: pointer; color: red" (click)="resetPassword()">
+        <a routerLink="/password-reset" class="password-reset-link" style="cursor: pointer; color: red">
           Request password change
         </a>
       </div>

@@ -43,8 +43,4 @@ export class LoginComponent implements OnInit {
     this.loginForm.reset();
   }
 
-  resetPassword() {
-    console.log('test');
-  }
-
 }
