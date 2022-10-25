@@ -78,6 +78,14 @@ export class UserService {
     return this.httpClient.post(`${this.apiUrl}/Users/Add`, user);
   }
 
+  blockAccount(id: string) {
+    return this.httpClient.post(`${this.apiUrl}/Users/Block`, {userId: id});
+  }
+
+  unlockAccount(id: string) {
+    return this.httpClient.post(`${this.apiUrl}/Users/Unlock`, {userId: id});
+  }
+
   deleteAccount(id: string) {
 
   }
