@@ -22,7 +22,6 @@ export class AccountManipulationComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getAccountsList()
       .subscribe(accounts => {
-        console.log(accounts);
         this.accounts = accounts as IUserAccount[];
       });
   }
