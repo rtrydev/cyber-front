@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ILoginData} from "../../interfaces/ILoginData";
-import {stat} from "fs";
 
 @Component({
   selector: 'app-login',
@@ -14,6 +13,8 @@ export class LoginComponent implements OnInit {
   isInvalidEmail = false;
   expired = false;
 
+  isInvalidPassword = false;
+
   public loginForm = this.formBuilder.group({
     login: ['', Validators.required],
     password: ['', Validators.required]
@@ -24,10 +25,14 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.userService.userStatus.subscribe(status => {
       this.expired = status === 'expired';
+      this.isInvalidPassword = status === 'invalid pass';
     })
   }
 
   submit() {
+    this.isInvalidPassword = false;
+    this.expired = false;
+
     if (!this.loginForm.get('login')?.valid) {
       this.isInvalidEmail = true;
       return;

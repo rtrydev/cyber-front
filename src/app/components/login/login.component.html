@@ -23,6 +23,11 @@
         </a>
       </div>
     </div>
+    <div *ngIf="isInvalidPassword" class="text-center mt-3">
+      <div style="color: red">
+        Invalid login or password.
+      </div>
+    </div>
 
   </form>
 </div>

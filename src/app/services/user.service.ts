@@ -45,6 +45,10 @@ export class UserService {
         if (error.status === 401) {
           this.userStatus.next('expired');
         }
+
+        if (error.status === 403) {
+          this.userStatus.next('invalid pass');
+        }
       })
   }
 
@@ -63,7 +67,7 @@ export class UserService {
   logout() {
     this.userData.next(null);
     localStorage.removeItem("user");
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then();
   }
 
   changePassword(password: string) {
