@@ -10,6 +10,9 @@ import {Roles} from "../../../enums/roles";
 })
 export class PasswordChangeComponent implements OnInit {
 
+  passwordChangedSuccess = false;
+  passwordChangedFail = false;
+
   public passwordChangeForm = this.formBuilder.group({
     password: ['', Validators.required],
     passwordRepeat: ['', Validators.required]
@@ -26,6 +29,9 @@ export class PasswordChangeComponent implements OnInit {
   }
 
   submit() {
+    this.passwordChangedSuccess = false;
+    this.passwordChangedFail = false;
+
     if (!this.passwordChangeForm.get('password')?.valid) {
       return;
     }
@@ -40,7 +46,11 @@ export class PasswordChangeComponent implements OnInit {
 
     const newPassword = this.passwordChangeForm.get('password')?.value
 
-    this.userService.changePassword(newPassword).subscribe();
+    this.userService.changePassword(newPassword).subscribe(result => {
+      this.passwordChangedSuccess = true;
+    }, err => {
+      this.passwordChangedFail = true;
+    });
 
     this.passwordChangeForm.reset();
   }
