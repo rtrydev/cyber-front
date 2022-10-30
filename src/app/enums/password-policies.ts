@@ -1,5 +1,5 @@
 export enum PasswordPolicies {
-  LowerCaseLettersPolicy = "LowerCaseLettersPolicy",
+  LowercaseLettersPolicy = "LowercaseLettersPolicy",
   NumbersPolicy = "NumbersPolicy",
   UppercaseLettersPolicy = "UppercaseLettersPolicy"
 }
