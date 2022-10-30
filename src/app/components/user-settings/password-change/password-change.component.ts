@@ -13,8 +13,10 @@ export class PasswordChangeComponent implements OnInit {
   passwordChangedSuccess = false;
   passwordChangedFail = false;
   passwordAlreadyUsed = false;
+  wrongPassword = false;
 
   public passwordChangeForm = this.formBuilder.group({
+    oldPassword: ['', Validators.required],
     password: ['', Validators.required],
     passwordRepeat: ['', Validators.required]
   })
@@ -33,8 +35,12 @@ export class PasswordChangeComponent implements OnInit {
     this.passwordChangedSuccess = false;
     this.passwordChangedFail = false;
     this.passwordAlreadyUsed = false;
+    this.wrongPassword = false;
 
     if (!this.passwordChangeForm.get('password')?.valid) {
+      return;
+    }
+    if (!this.passwordChangeForm.get('oldPassword')?.valid) {
       return;
     }
 
@@ -46,13 +52,18 @@ export class PasswordChangeComponent implements OnInit {
       return;
     }
 
-    const newPassword = this.passwordChangeForm.get('password')?.value
+    const newPassword = {
+      newPassword: this.passwordChangeForm.get('password')?.value,
+      oldPassword: this.passwordChangeForm.get('oldPassword')?.value
+    }
 
     this.userService.changePassword(newPassword).subscribe(result => {
       this.passwordChangedSuccess = true;
     }, err => {
       if (err.error.ErrorCode === 'password_already_used') {
         this.passwordAlreadyUsed = true;
+      } else if (err.error.ErrorCode === 'incorrect_credentials') {
+        this.wrongPassword = true;
       } else {
         this.passwordChangedFail = true;
       }
