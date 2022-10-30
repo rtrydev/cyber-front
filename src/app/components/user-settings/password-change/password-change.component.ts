@@ -12,6 +12,7 @@ export class PasswordChangeComponent implements OnInit {
 
   passwordChangedSuccess = false;
   passwordChangedFail = false;
+  passwordAlreadyUsed = false;
 
   public passwordChangeForm = this.formBuilder.group({
     password: ['', Validators.required],
@@ -31,6 +32,7 @@ export class PasswordChangeComponent implements OnInit {
   submit() {
     this.passwordChangedSuccess = false;
     this.passwordChangedFail = false;
+    this.passwordAlreadyUsed = false;
 
     if (!this.passwordChangeForm.get('password')?.valid) {
       return;
@@ -49,7 +51,11 @@ export class PasswordChangeComponent implements OnInit {
     this.userService.changePassword(newPassword).subscribe(result => {
       this.passwordChangedSuccess = true;
     }, err => {
-      this.passwordChangedFail = true;
+      if (err.error.ErrorCode === 'password_already_used') {
+        this.passwordAlreadyUsed = true;
+      } else {
+        this.passwordChangedFail = true;
+      }
     });
 
     this.passwordChangeForm.reset();
