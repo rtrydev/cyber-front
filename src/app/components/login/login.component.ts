@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ILoginData} from "../../interfaces/ILoginData";
+import {stat} from "fs";
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
   expired = false;
 
   isInvalidPassword = false;
+  isBlocked = false;
 
   public loginForm = this.formBuilder.group({
     login: ['', Validators.required],
@@ -23,15 +25,20 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.userStatus.next(null);
+
     this.userService.userStatus.subscribe(status => {
       this.expired = status === 'expired';
       this.isInvalidPassword = status === 'invalid pass';
-    })
+      this.isBlocked = status === 'blocked';
+    });
   }
 
   submit() {
     this.isInvalidPassword = false;
     this.expired = false;
+    this.isBlocked = false;
+    this.isInvalidEmail = false;
 
     if (!this.loginForm.get('login')?.valid) {
       this.isInvalidEmail = true;

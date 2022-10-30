@@ -43,7 +43,16 @@ export class UserService {
         this.userData.next(user);
       },error => {
         if (error.status === 401) {
-          this.userStatus.next('expired');
+          const errorBody = JSON.parse(error.error);
+
+          if (errorBody.ErrorCode === "user_blocked") {
+            this.userStatus.next('blocked');
+          }
+
+          if (errorBody.ErrorCode === "user_expired") {
+            this.userStatus.next('expired');
+          }
+
         }
 
         if (error.status === 403) {
