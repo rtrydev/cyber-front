@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PasswordPoliciesComponent } from './password-policies.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('PasswordPoliciesComponent', () => {
   let component: PasswordPoliciesComponent;
@@ -8,6 +9,9 @@ describe('PasswordPoliciesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ],
       declarations: [ PasswordPoliciesComponent ]
     })
     .compileComponents();
