@@ -15,6 +15,10 @@ export class PasswordPoliciesService {
     return this.httpClient.get(`${this.apiUrl}/PasswordPolicies?userId=${userId}`);
   }
 
+  public getMyPolicies() {
+    return this.httpClient.get(`${this.apiUrl}/PasswordPolicies/Me`);
+  }
+
   public enablePolicy(userId: string, key: string) {
     const body = {
       userId,
