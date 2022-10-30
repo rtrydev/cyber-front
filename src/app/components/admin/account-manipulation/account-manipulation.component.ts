@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {IUserAccount} from "../../../interfaces/IUserAccount";
 import {UserService} from "../../../services/user.service";
-import {faBan, faCheck, faDeleteLeft, faEdit, faRemove, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {faBan, faCheck, faDeleteLeft, faEdit, faKey, faRemove, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-account-manipulation',
@@ -10,10 +10,17 @@ import {faBan, faCheck, faDeleteLeft, faEdit, faRemove, faTrashCan} from "@forta
 })
 export class AccountManipulationComponent implements OnInit {
 
+  @Output()
+  userEditVisible = new EventEmitter<{visible: boolean, user: IUserAccount | null}>();
+
+  @Output()
+  policyVisible = new EventEmitter<{visible: boolean, user: IUserAccount | null}>();
+
   editIcon = faEdit;
   deleteIcon = faTrashCan;
   blockIcon = faBan;
-  unblockIcon = faCheck
+  unblockIcon = faCheck;
+  policyIcon = faKey;
 
   accounts: IUserAccount[] = [];
 
@@ -24,10 +31,24 @@ export class AccountManipulationComponent implements OnInit {
       .subscribe(accounts => {
         this.accounts = accounts as IUserAccount[];
       });
+
+    this.userService.userUpdated
+      .subscribe(user => {
+        const index = this.accounts.findIndex(u => u.userId === user?.userId);
+        const userToModify = this.accounts[index];
+
+        this.accounts[index] = {
+          ...userToModify,
+          username: user?.username || userToModify.username,
+          firstName: user?.firstName || userToModify.firstName,
+          lastName: user?.lastName || userToModify.lastName,
+          email: user?.email || userToModify.email,
+        }
+      })
   }
 
-  editUser(id: string) {
-
+  editUser(user: IUserAccount) {
+    this.userEditVisible.emit({visible: true, user});
   }
 
   deleteUser(id: string) {
@@ -57,6 +78,10 @@ export class AccountManipulationComponent implements OnInit {
     }
 
     account.isBlocked = !account.isBlocked;
+  }
+
+  editPasswordPolicies(user: IUserAccount) {
+    this.policyVisible.emit({visible: true, user});
   }
 
 }

@@ -8,6 +8,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from '../../environments/environment'
 import {Router} from "@angular/router";
 import {IUserCreateData} from "../interfaces/IUserCreateData";
+import {IUserEditData} from "../interfaces/IUserEditData";
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,12 @@ export class UserService {
   userStatus: BehaviorSubject<string | null>;
   apiUrl = environment.apiUrl;
 
+  userUpdated: BehaviorSubject<IUserAccount | null>
+
   constructor(private httpClient: HttpClient, private router: Router) {
     this.userData = new BehaviorSubject<IUserData | null>(null);
     this.userStatus = new BehaviorSubject<string | null>(null);
+    this.userUpdated = new BehaviorSubject<IUserAccount | null>(null);
   }
 
   login(loginData: ILoginData) {
@@ -39,7 +43,20 @@ export class UserService {
         this.userData.next(user);
       },error => {
         if (error.status === 401) {
-          this.userStatus.next('expired');
+          const errorBody = JSON.parse(error.error);
+
+          if (errorBody.ErrorCode === "user_blocked") {
+            this.userStatus.next('blocked');
+          }
+
+          if (errorBody.ErrorCode === "user_expired") {
+            this.userStatus.next('expired');
+          }
+
+        }
+
+        if (error.status === 403) {
+          this.userStatus.next('invalid pass');
         }
       })
   }
@@ -59,11 +76,11 @@ export class UserService {
   logout() {
     this.userData.next(null);
     localStorage.removeItem("user");
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then();
   }
 
-  changePassword(password: string) {
-    return this.httpClient.post(`${this.apiUrl}/Users/ChangePassword`, {newPassword: password});
+  changePassword(password: {newPassword: string, oldPassword: string}) {
+    return this.httpClient.post(`${this.apiUrl}/Users/ChangePassword`, password);
   }
 
   resetPassword(email: string) {
@@ -88,6 +105,10 @@ export class UserService {
 
   deleteAccount(id: string) {
     return this.httpClient.delete(`${this.apiUrl}/Users`, {body: {userId: id}});
+  }
+
+  editAccount(user: IUserEditData) {
+    return this.httpClient.put(`${this.apiUrl}/Users`, user);
   }
 
   private parseJwt (token: string) {

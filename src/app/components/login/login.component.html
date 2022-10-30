@@ -23,6 +23,16 @@
         </a>
       </div>
     </div>
+    <div *ngIf="isInvalidPassword" class="text-center mt-3">
+      <div style="color: red">
+        Invalid login or password.
+      </div>
+    </div>
+    <div *ngIf="isBlocked" class="text-center mt-3">
+      <div style="color: red">
+        Your account has been blocked by an administrator.
+      </div>
+    </div>
 
   </form>
 </div>
