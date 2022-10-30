@@ -9,7 +9,7 @@ import {IUserEditData} from "../../../interfaces/IUserEditData";
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss']
 })
-export class UserEditComponent implements OnInit, AfterViewInit {
+export class UserEditComponent implements AfterViewInit {
 
   @Input()
   user: IUserAccount | null = null;
@@ -25,9 +25,6 @@ export class UserEditComponent implements OnInit, AfterViewInit {
   visibilityChanged = new EventEmitter<{visible: boolean, user: IUserAccount | null}>();
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) { }
-
-  ngOnInit(): void {
-  }
 
   ngAfterViewInit() {
     this.editUserForm.controls['email'].setValue(this.user?.email ?? '');
