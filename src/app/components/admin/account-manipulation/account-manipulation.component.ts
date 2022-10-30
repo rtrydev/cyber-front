@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {IUserAccount} from "../../../interfaces/IUserAccount";
 import {UserService} from "../../../services/user.service";
-import {faBan, faCheck, faDeleteLeft, faEdit, faRemove, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {faBan, faCheck, faDeleteLeft, faEdit, faKey, faRemove, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-account-manipulation',
@@ -13,10 +13,14 @@ export class AccountManipulationComponent implements OnInit {
   @Output()
   userEditVisible = new EventEmitter<{visible: boolean, user: IUserAccount | null}>();
 
+  @Output()
+  policyVisible = new EventEmitter<{visible: boolean, user: IUserAccount | null}>();
+
   editIcon = faEdit;
   deleteIcon = faTrashCan;
   blockIcon = faBan;
-  unblockIcon = faCheck
+  unblockIcon = faCheck;
+  policyIcon = faKey;
 
   accounts: IUserAccount[] = [];
 
@@ -74,6 +78,10 @@ export class AccountManipulationComponent implements OnInit {
     }
 
     account.isBlocked = !account.isBlocked;
+  }
+
+  editPasswordPolicies(user: IUserAccount) {
+    this.policyVisible.emit({visible: true, user});
   }
 
 }

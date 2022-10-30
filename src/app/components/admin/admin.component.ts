@@ -10,12 +10,13 @@ import {IUserAccount} from "../../interfaces/IUserAccount";
 })
 export class AdminComponent implements OnInit {
   userEditVisible: boolean = false;
+  passwordPoliciesVisible: boolean = false
+
   userForEdit: IUserAccount | null = null;
 
   adminTabs = [
     {id: 'USER_ADD', title: 'Add user', active: false},
-    {id: 'ACCOUNT_MANIPULATION', title: 'Manipulate accounts', active: true},
-    {id: 'PASSWORD_POLICIES', title: 'Password policies', active: false}
+    {id: 'ACCOUNT_MANIPULATION', title: 'Manipulate accounts', active: true}
   ];
 
   selectedTab = 'ACCOUNT_MANIPULATION';
@@ -42,6 +43,11 @@ export class AdminComponent implements OnInit {
 
   showUserEdit(event: {visible: boolean, user: IUserAccount | null}) {
     this.userEditVisible = event.visible;
+    this.userForEdit = event.user;
+  }
+
+  showPolicyEdit(event: {visible: boolean, user: IUserAccount | null}) {
+    this.passwordPoliciesVisible = event.visible;
     this.userForEdit = event.user;
   }
 

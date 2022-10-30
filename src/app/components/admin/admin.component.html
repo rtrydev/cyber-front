@@ -13,9 +13,9 @@
     </li>
   </ul>
   <div [ngSwitch]="selectedTab">
-    <app-account-manipulation (userEditVisible)="showUserEdit($event)" *ngSwitchCase="'ACCOUNT_MANIPULATION'"></app-account-manipulation>
-    <app-password-policies *ngSwitchCase="'PASSWORD_POLICIES'"></app-password-policies>
+    <app-account-manipulation (policyVisible)="showPolicyEdit($event)" (userEditVisible)="showUserEdit($event)" *ngSwitchCase="'ACCOUNT_MANIPULATION'"></app-account-manipulation>
     <app-user-add *ngSwitchCase="'USER_ADD'"></app-user-add>
   </div>
 </div>
 <app-user-edit *ngIf="userEditVisible" [user]="userForEdit" (visibilityChanged)="showUserEdit($event)"></app-user-edit>
+<app-password-policies *ngIf="passwordPoliciesVisible" [userId]="userForEdit?.userId || ''" (visibilityChanged)="showPolicyEdit($event)"></app-password-policies>

@@ -18,6 +18,7 @@
         <fa-icon (click)="editUser(account)" class="p-2 action-icon" [icon]="editIcon"></fa-icon>
         <fa-icon (click)="deleteUser(account.userId)" class="p-2 action-icon" [icon]="deleteIcon"></fa-icon>
         <fa-icon (click)="blockUser(account.userId)" class="p-2 action-icon" [icon]="account.isBlocked ? unblockIcon : blockIcon"></fa-icon>
+        <fa-icon (click)="editPasswordPolicies(account)" class="p-2 action-icon" [icon]="policyIcon"></fa-icon>
       </td>
     </tr>
   </tbody>
