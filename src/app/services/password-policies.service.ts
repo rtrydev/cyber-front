@@ -38,7 +38,7 @@ export class PasswordPoliciesService {
   }
 
   public getPasswordExpireTime(userId: string) {
-    return this.httpClient.get(`${this.apiUrl}/PasswordPolices/PasswordExpireTime?userGuid=${userId}`);
+    return this.httpClient.get(`${this.apiUrl}/PasswordPolicies/PasswordExpireTime?userGuid=${userId}`);
   }
 
   public setPasswordExpireTime(userId: string, days: number) {
