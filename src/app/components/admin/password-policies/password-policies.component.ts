@@ -13,6 +13,10 @@ export class PasswordPoliciesComponent implements OnInit{
 
   currentUserPolicies: IPasswordPolicy[] = [];
 
+  expirationTime: number = -1;
+  expirationChangeSuccess = false;
+  expirationChangeFail = false;
+
   @Input()
   userId: string = "";
 
@@ -28,7 +32,11 @@ export class PasswordPoliciesComponent implements OnInit{
   ngOnInit(): void {
     this.passwordPolicyService.getPolicies(this.userId).subscribe(policy => {
       this.currentUserPolicies = policy as [];
-    })
+    });
+
+    this.passwordPolicyService.getPasswordExpireTime(this.userId).subscribe(expireTime => {
+      this.expirationTime = expireTime as number;
+    });
   }
 
   togglePolicy(key: string, event: any) {
@@ -47,6 +55,18 @@ export class PasswordPoliciesComponent implements OnInit{
         .subscribe();
     }
 
+  }
+
+  changeExpireTime() {
+    this.expirationChangeSuccess = false;
+    this.expirationChangeFail = false;
+
+    this.passwordPolicyService.setPasswordExpireTime(this.userId, this.expirationTime)
+      .subscribe(result => {
+        this.expirationChangeSuccess = true;
+      }, err => {
+        this.expirationChangeFail = true;
+      });
   }
 
 }
