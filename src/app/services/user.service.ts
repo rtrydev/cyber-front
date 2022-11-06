@@ -49,7 +49,7 @@ export class UserService {
             this.userStatus.next('blocked');
           }
 
-          if (errorBody.ErrorCode === "user_expired") {
+          if (errorBody.ErrorCode === "password_expired") {
             this.userStatus.next('expired');
           }
 
