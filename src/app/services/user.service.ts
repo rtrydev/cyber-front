@@ -92,7 +92,7 @@ export class UserService {
   }
 
   addAccount(user: IUserCreateData) {
-    return this.httpClient.post(`${this.apiUrl}/Users/Add`, user);
+    return this.httpClient.post(`${this.apiUrl}/Users`, user);
   }
 
   blockAccount(id: string) {
