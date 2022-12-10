@@ -74,6 +74,7 @@ export class UserService {
   }
 
   logout() {
+    this.httpClient.post(`${this.apiUrl}/Users/Logout`, {}).subscribe();
     this.userData.next(null);
     localStorage.removeItem("user");
     this.router.navigate(['/login']).then();
