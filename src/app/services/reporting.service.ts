@@ -11,6 +11,6 @@ export class ReportingService {
   constructor(private httpClient: HttpClient) { }
 
   public getReportingData() {
-    return this.httpClient.get(`${this.reportingApiUrl}/reporting`);
+    return this.httpClient.get(`${this.reportingApiUrl}/reporting/`);
   }
 }

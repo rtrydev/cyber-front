@@ -20,7 +20,7 @@ export class ReportingViewComponent implements OnInit {
   }
 
   getDate(timestamp: number) {
-    return (new Date(timestamp)).toISOString();
+    return (new Date(timestamp)).toLocaleString();
   }
 
 }
