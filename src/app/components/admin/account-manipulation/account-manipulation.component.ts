@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {IUserAccount} from "../../../interfaces/IUserAccount";
 import {UserService} from "../../../services/user.service";
-import {faBan, faCheck, faDeleteLeft, faEdit, faKey, faRemove, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {faBan, faCheck, faDeleteLeft, faEdit, faKey, faRemove, faStarOfLife, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-account-manipulation',
@@ -21,6 +21,7 @@ export class AccountManipulationComponent implements OnInit {
   blockIcon = faBan;
   unblockIcon = faCheck;
   policyIcon = faKey;
+  generateOneTimePasswordIcon = faStarOfLife;
 
   accounts: IUserAccount[] = [];
 
@@ -82,6 +83,10 @@ export class AccountManipulationComponent implements OnInit {
 
   editPasswordPolicies(user: IUserAccount) {
     this.policyVisible.emit({visible: true, user});
+  }
+
+  generateOneTimePassword(id: string){
+    this.userService.generateOneTimePassword(id).subscribe(res => {});
   }
 
 }
