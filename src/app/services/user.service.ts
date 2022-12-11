@@ -131,6 +131,10 @@ export class UserService {
     return this.httpClient.put(`${this.apiUrl}/Config/FailedLoginTimeout?value=${value}`,{});
   }
 
+  generateOneTimePassword(id : string){
+    return this.httpClient.post(`${this.apiUrl}/Users/GenerateOneTimePassword?userId=${id}`,{});
+  }
+
   private parseJwt (token: string) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
