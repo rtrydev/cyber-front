@@ -18,7 +18,8 @@ export class UserEditComponent implements AfterViewInit {
     email: ['', Validators.compose([Validators.required, Validators.email])],
     username: ['', Validators.required],
     firstName: ['', Validators.required],
-    lastName: ['', Validators.required]
+    lastName: ['', Validators.required],
+    role: [0, Validators.required]
   })
 
   @Output()
@@ -31,6 +32,7 @@ export class UserEditComponent implements AfterViewInit {
     this.editUserForm.controls['username'].setValue(this.user?.username ?? '');
     this.editUserForm.controls['firstName'].setValue(this.user?.firstName ?? '');
     this.editUserForm.controls['lastName'].setValue(this.user?.lastName ?? '');
+    this.editUserForm.controls['role'].setValue(this.user?.role ?? 0);
   }
 
   closeEdit() {
@@ -48,9 +50,12 @@ export class UserEditComponent implements AfterViewInit {
 
     this.userService.editAccount(user)
       .subscribe(user => {
-        this.userService.userUpdated.next(user as IUserAccount);
-        this.closeEdit();
+        this.userService.setUserRole(this.editUserForm.get('role')?.value,this.user?.userId || "").subscribe(res => {
+          this.userService.userUpdated.next(user as IUserAccount);
+          this.closeEdit();
+        })    
       });
+
   }
 
 }
