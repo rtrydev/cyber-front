@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   public loginForm = this.formBuilder.group({
     login: ['', Validators.required],
-    password: ['', Validators.required]
+    password: [''],
+    singleTimePassword: ['']
   })
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) { }
@@ -45,12 +46,16 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    const isSinglePassword = !!this.loginForm.get('singleTimePassword')?.value;
+
     const loginData = {
       login: this.loginForm.get('login')?.value,
-      password: this.loginForm.get('password')?.value
+      password: isSinglePassword
+      ? this.loginForm.get('singleTimePassword')?.value
+      :this.loginForm.get('password')?.value
     } as ILoginData;
 
-    this.userService.login(loginData);
+    this.userService.login(loginData, isSinglePassword);
 
     this.loginForm.reset();
   }

@@ -21,6 +21,7 @@ import { PasswordResetComponent } from './components/password-reset/password-res
 import { HomeComponent } from './components/home/home.component';
 import { ArticleHeaderComponent } from './components/home/article-header/article-header.component';
 import { UserEditComponent } from './components/admin/user-edit/user-edit.component';
+import { ReportingViewComponent } from './components/admin/reporting-view/reporting-view.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -45,7 +46,8 @@ const routes: Routes = [
     PasswordResetComponent,
     HomeComponent,
     ArticleHeaderComponent,
-    UserEditComponent
+    UserEditComponent,
+    ReportingViewComponent
   ],
   imports: [
     BrowserModule,

@@ -27,9 +27,12 @@ export class UserService {
     this.userUpdated = new BehaviorSubject<IUserAccount | null>(null);
   }
 
-  login(loginData: ILoginData) {
-    this.httpClient.post(`${this.apiUrl}/Users/Login`, loginData, {responseType: 'text'})
-      .subscribe(token => {
+  login(loginData: ILoginData, isSingleTimePass: boolean) {
+    const request = isSingleTimePass
+      ? this.httpClient.post(`${this.apiUrl}/Users/LoginByOneTimePassword`, loginData, {responseType: 'text'})
+      : this.httpClient.post(`${this.apiUrl}/Users/Login`, loginData, {responseType: 'text'})
+
+    request.subscribe(token => {
         const parsedJwt = this.parseJwt(token);
 
         const user = {
@@ -74,6 +77,7 @@ export class UserService {
   }
 
   logout() {
+    this.httpClient.post(`${this.apiUrl}/Users/Logout`, {}).subscribe();
     this.userData.next(null);
     localStorage.removeItem("user");
     this.router.navigate(['/login']).then();
