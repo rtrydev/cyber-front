@@ -17,7 +17,8 @@ export class AdminComponent implements OnInit {
   adminTabs = [
     {id: 'USER_ADD', title: 'Add user', active: false},
     {id: 'ACCOUNT_MANIPULATION', title: 'Manipulate accounts', active: true},
-    {id: 'REPORTING', title: 'Reporting', active: false}
+    {id: 'REPORTING', title: 'Reporting', active: false},
+    {id: 'CONFIG', title: 'Config', active: false}
   ];
 
   selectedTab = 'ACCOUNT_MANIPULATION';

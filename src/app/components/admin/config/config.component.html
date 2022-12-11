@@ -1,0 +1,26 @@
+<div class="col-sm-10 col-md-6 bg-dark center">
+    <form [formGroup]="updateConfigForm" (ngSubmit)="submit()" class="mb-5">
+      <div class="form-group bg-dark text-center pt-2">
+        <label for="inactiveTimeout" class="text-white pb-2">Inactive timeout</label>
+        <div class="col-2 center">
+          <input formControlName="inactiveTimeout" type="text" class="form-control bg-dark text-white me-2 text-center" id="inactiveTimeout">
+        </div>
+      </div>
+      <div class="form-group bg-dark text-center pt-2">
+        <label for="allowedLoginAttempts" class="text-white pb-2">Allowed login attempts</label>
+        <div class="col-2 center">
+          <input formControlName="allowedLoginAttempts" type="text" class="form-control bg-dark text-white me-2 text-center" id="allowedLoginAttempts">
+        </div>
+      </div>
+      <div class="form-group bg-dark text-center pt-2">
+        <label for="failedLoginTimeout" class="text-white pb-2">FailedLoginTimeout</label>
+        <div class="col-2 center">
+          <input formControlName="failedLoginTimeout" type="text" class="form-control bg-dark text-white me-2 text-center" id="failedLoginTimeout">
+        </div>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <button type="submit" class="btn btn-outline-success">Update config</button>
+      </div>
+    </form>
+  </div>
+  
