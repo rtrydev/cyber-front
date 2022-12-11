@@ -5,6 +5,7 @@
     <th scope="col" class="text-white">Type</th>
     <th scope="col" class="text-white">User ID</th>
     <th scope="col" class="text-white">Username</th>
+    <th scope="col" class="text-white">Details</th>
   </tr>
   </thead>
   <tbody>
@@ -13,6 +14,7 @@
     <td class="text-white">{{report.event_type}}</td>
     <td class="text-white">{{report.user_id}}</td>
     <td class="text-white">{{report.username}}</td>
+    <td class="text-white">{{getDetails(report)}}</td>
   </tr>
   </tbody>
 </table>

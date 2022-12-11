@@ -23,4 +23,11 @@ export class ReportingViewComponent implements OnInit {
     return (new Date(timestamp)).toLocaleString();
   }
 
+  getDetails(reporting: IReportingData) {
+    if (reporting.old_role && reporting.new_role) {
+      return `${reporting.old_role} -> ${reporting.new_role}`;
+    }
+    return "";
+  }
+
 }
