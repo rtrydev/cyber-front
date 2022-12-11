@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   isInvalidPassword = false;
   isBlocked = false;
 
+  isTooManyAttempts = false;
+
   public loginForm = this.formBuilder.group({
     login: ['', Validators.required],
     password: [''],
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
       this.expired = status === 'expired';
       this.isInvalidPassword = status === 'invalid pass';
       this.isBlocked = status === 'blocked';
+      this.isTooManyAttempts = status === 'attempts';
     });
   }
 
@@ -40,6 +43,7 @@ export class LoginComponent implements OnInit {
     this.expired = false;
     this.isBlocked = false;
     this.isInvalidEmail = false;
+    this.isTooManyAttempts = false;
 
     if (!this.loginForm.get('login')?.valid) {
       this.isInvalidEmail = true;

@@ -63,7 +63,15 @@ export class UserService {
         }
 
         if (error.status === 403) {
-          this.userStatus.next('invalid pass');
+          const errorBody = JSON.parse(error.error);
+          console.log(error);
+
+          if (errorBody.ErrorCode === "user_login_blocked_attempts") {
+            this.userStatus.next('attempts');
+          } else {
+            this.userStatus.next('invalid pass');
+          }
+
         }
       })
   }
