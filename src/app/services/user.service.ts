@@ -143,6 +143,10 @@ export class UserService {
     return this.httpClient.put(`${this.apiUrl}/Config/FailedLoginTimeout?value=${value}`,{});
   }
 
+  setUserRole(role : number, id : string){
+    return this.httpClient.put(`${this.apiUrl}/Users/Role`,{userId:id, newRole: Number(role)});
+  }
+
   generateOneTimePassword(id : string){
     return this.httpClient.post(`${this.apiUrl}/Users/GenerateOneTimePassword?userId=${id}`,{});
   }

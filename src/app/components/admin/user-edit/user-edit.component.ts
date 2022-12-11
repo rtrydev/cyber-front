@@ -50,9 +50,12 @@ export class UserEditComponent implements AfterViewInit {
 
     this.userService.editAccount(user)
       .subscribe(user => {
-        this.userService.userUpdated.next(user as IUserAccount);
-        this.closeEdit();
+        this.userService.setUserRole(this.editUserForm.get('role')?.value,this.user?.userId || "").subscribe(res => {
+          this.userService.userUpdated.next(user as IUserAccount);
+          this.closeEdit();
+        })    
       });
+
   }
 
 }
