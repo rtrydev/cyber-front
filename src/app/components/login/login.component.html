@@ -39,6 +39,11 @@
         Your account has been blocked by an administrator.
       </div>
     </div>
+    <div *ngIf="isTooManyAttempts" class="text-center mt-3">
+      <div style="color: red">
+        You tried to login too many times with wrong password, your account has been suspended for 15 minutes.
+      </div>
+    </div>
 
   </form>
 </div>

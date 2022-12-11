@@ -18,6 +18,7 @@ export class UserService {
   userData: BehaviorSubject<IUserData | null>;
   userStatus: BehaviorSubject<string | null>;
   apiUrl = environment.apiUrl;
+  currentInactivity = 0;
 
   userUpdated: BehaviorSubject<IUserAccount | null>
 
@@ -38,8 +39,11 @@ export class UserService {
         const user = {
           id: parsedJwt.UserId,
           token: token,
-          role: parsedJwt.role
+          role: parsedJwt.role,
+          inactiveTimeout: Number(parsedJwt.inactiveTimeout) * 60 || -1
         } as IUserData;
+
+        this.inactivityHandler(user.inactiveTimeout);
 
         localStorage.setItem("user", JSON.stringify(user));
 
@@ -59,7 +63,15 @@ export class UserService {
         }
 
         if (error.status === 403) {
-          this.userStatus.next('invalid pass');
+          const errorBody = JSON.parse(error.error);
+          console.log(error);
+
+          if (errorBody.ErrorCode === "user_login_blocked_attempts") {
+            this.userStatus.next('attempts');
+          } else {
+            this.userStatus.next('invalid pass');
+          }
+
         }
       })
   }
@@ -144,4 +156,44 @@ export class UserService {
 
     return JSON.parse(jsonPayload);
   };
+
+  private inactivityHandler(inactivityTime: number) {
+    if (inactivityTime === -1) {
+      return;
+    }
+    this.currentInactivity = 0;
+
+    window.addEventListener('mousemove', () => {
+      this.currentInactivity = 0;
+    });
+
+    window.addEventListener('mousedown', () => {
+      this.currentInactivity = 0;
+    });
+
+    window.addEventListener('mouseup', () => {
+      this.currentInactivity = 0;
+    });
+
+    window.addEventListener('keypress', () => {
+      this.currentInactivity = 0;
+    });
+
+    window.addEventListener('scroll', () => {
+      this.currentInactivity = 0;
+    });
+
+    setInterval(() => {
+      this.currentInactivity++;
+      const maxInactivity = this.userData.value?.inactiveTimeout || -1;
+
+      if (!maxInactivity) {
+        return;
+      }
+
+      if (this.currentInactivity > maxInactivity) {
+        this.logout();
+      }
+    }, 1000);
+  }
 }
