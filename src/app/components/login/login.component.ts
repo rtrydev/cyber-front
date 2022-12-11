@@ -51,8 +51,8 @@ export class LoginComponent implements OnInit {
     const loginData = {
       login: this.loginForm.get('login')?.value,
       password: isSinglePassword
-      ? this.loginForm.get('singleTimePassword')?.value
-      :this.loginForm.get('password')?.value
+      ? Number(this.loginForm.get('singleTimePassword')?.value)
+      : this.loginForm.get('password')?.value
     } as ILoginData;
 
     this.userService.login(loginData, isSinglePassword);
