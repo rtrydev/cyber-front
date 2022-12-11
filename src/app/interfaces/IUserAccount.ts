@@ -5,4 +5,5 @@ export interface IUserAccount {
   lastName: string;
   email: string;
   isBlocked: boolean;
+  role: string;
 }

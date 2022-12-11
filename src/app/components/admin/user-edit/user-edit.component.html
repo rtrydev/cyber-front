@@ -29,6 +29,15 @@
           <input formControlName="email" type="text" class="form-control bg-dark text-white me-2" id="email">
         </div>
       </div>
+      <div class="form-group bg-dark text-center pt-2">
+        <label for="role" class="text-white pb-2">Role</label>
+        <div class="col-8 center">
+          <select formControlName="role" class="form-control bg-dark text-white me-2" id="role">
+            <option value=0>test1</option>
+            <option value=1>test2</option>
+          </select>
+        </div>
+      </div>
       <div class="d-flex justify-content-center mt-5">
         <button type="submit" class="btn btn-outline-success m-2">Submit</button>
         <button class="btn btn-outline-warning m-2" (click)="closeEdit()">Cancel</button>
