@@ -22,6 +22,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ArticleHeaderComponent } from './components/home/article-header/article-header.component';
 import { UserEditComponent } from './components/admin/user-edit/user-edit.component';
 import { ReportingViewComponent } from './components/admin/reporting-view/reporting-view.component';
+import { ConfigComponent } from './components/admin/config/config.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -47,7 +48,8 @@ const routes: Routes = [
     HomeComponent,
     ArticleHeaderComponent,
     UserEditComponent,
-    ReportingViewComponent
+    ReportingViewComponent,
+    ConfigComponent
   ],
   imports: [
     BrowserModule,
