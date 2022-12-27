@@ -20,6 +20,7 @@ export class PasswordChangeComponent implements OnInit {
   passwordAlreadyUsed = false;
   wrongPassword = false;
   passwordsNotSame = false;
+  captchaResponse : string = '';
 
   passwordPolicies: IPasswordPolicy[] = [];
 
@@ -47,6 +48,10 @@ export class PasswordChangeComponent implements OnInit {
     })
   }
 
+  resolved(captchaResponse: string) {
+    this.captchaResponse = captchaResponse;
+  }
+
   submit() {
     this.passwordChangedSuccess = false;
     this.passwordChangedFail = false;
@@ -72,7 +77,8 @@ export class PasswordChangeComponent implements OnInit {
 
     const newPassword = {
       newPassword: this.passwordChangeForm.get('password')?.value,
-      oldPassword: this.passwordChangeForm.get('oldPassword')?.value
+      oldPassword: this.passwordChangeForm.get('oldPassword')?.value,
+      recaptcha: this.captchaResponse
     }
 
     this.userService.changePassword(newPassword).subscribe(result => {

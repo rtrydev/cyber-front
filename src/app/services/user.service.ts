@@ -95,7 +95,7 @@ export class UserService {
     this.router.navigate(['/login']).then();
   }
 
-  changePassword(password: {newPassword: string, oldPassword: string}) {
+  changePassword(password: {newPassword: string, oldPassword: string, recaptcha: string}) {
     return this.httpClient.post(`${this.apiUrl}/Users/ChangePassword`, password);
   }
 
