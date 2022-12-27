@@ -23,6 +23,7 @@ import { ArticleHeaderComponent } from './components/home/article-header/article
 import { UserEditComponent } from './components/admin/user-edit/user-edit.component';
 import { ReportingViewComponent } from './components/admin/reporting-view/reporting-view.component';
 import { ConfigComponent } from './components/admin/config/config.component';
+import { RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -58,7 +59,9 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    RecaptchaFormsModule,
+    RecaptchaModule
   ],
   exports: [
     RouterModule
