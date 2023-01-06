@@ -3,6 +3,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ILoginData} from "../../interfaces/ILoginData";
 import {stat} from "fs";
+import {CaptchaService} from "../../services/captcha.service";
 
 @Component({
   selector: 'app-login',
@@ -13,11 +14,11 @@ export class LoginComponent implements OnInit {
 
   isInvalidEmail = false;
   expired = false;
-
   isInvalidPassword = false;
   isBlocked = false;
-
   isTooManyAttempts = false;
+
+  captchaData: any = null;
 
   public loginForm = this.formBuilder.group({
     login: ['', Validators.required],
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
     singleTimePassword: ['']
   })
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private captchaService: CaptchaService) { }
 
   ngOnInit(): void {
     this.userService.userStatus.next(null);
@@ -35,6 +36,12 @@ export class LoginComponent implements OnInit {
       this.isInvalidPassword = status === 'invalid pass';
       this.isBlocked = status === 'blocked';
       this.isTooManyAttempts = status === 'attempts';
+    });
+
+    this.captchaService.getCaptcha().subscribe(result => {
+      this.captchaData = result;
+
+      console.log(this.captchaData);
     });
   }
 
