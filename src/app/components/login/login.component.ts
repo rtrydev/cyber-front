@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   isTooManyAttempts = false;
 
   captchaData: any = null;
+  captchaImg: any = null;
 
   public loginForm = this.formBuilder.group({
     login: ['', Validators.required],
@@ -39,9 +40,15 @@ export class LoginComponent implements OnInit {
     });
 
     this.captchaService.getCaptcha().subscribe(result => {
-      this.captchaData = result;
+      this.captchaData = JSON.parse(result);
 
-      console.log(this.captchaData);
+      fetch("data:image/jpg;base64," + this.captchaData.big_img)
+        .then(res => res.blob())
+        .then(blob => {
+          this.captchaImg = URL.createObjectURL(blob);
+          console.log(blob);
+          console.log(this.captchaImg);
+        })
     });
   }
 
