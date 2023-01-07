@@ -1,15 +1,15 @@
-<div class="captcha-border p-3 shadow">
+<div class="captcha-border p-3 mb-2 shadow">
   <div *ngIf="captchaData">
     <p class="text-white text-center w-75 center">
       Verify that you are a human by selecting the image that is missing from the original one
     </p>
-    <div class="d-flex justify-content-center mb-3" style="width: 640px">
-      <img width="480px" height="480px" src="{{captchaImg}}">
-    </div>
-    <div style="width: 512px; margin-left: auto; margin-right: auto">
-      <div class="d-flex justify-content-center flex-wrap">
-        <div style="width: 110px;" class="m-2 captcha-select-image" *ngFor="let img of captchaOptions">
-          <img width="110px" height="110px" src="{{img.image}}">
+    <div class="d-flex justify-content-center m-2 center" style="width: 1024px">
+      <img width="512px" height="512px" src="{{captchaImg}}">
+      <div style="width: 512px; margin-left: auto; margin-right: auto">
+        <div class="d-flex justify-content-center flex-wrap" style="margin-right: -1.5rem">
+          <div style="width: 110px;" class="m-2 captcha-select-image" *ngFor="let img of captchaOptions">
+            <img width="110px" height="110px" src="{{img.image}}">
+          </div>
         </div>
       </div>
     </div>
