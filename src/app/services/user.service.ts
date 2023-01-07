@@ -47,6 +47,7 @@ export class UserService {
 
         localStorage.setItem("user", JSON.stringify(user));
 
+        this.userStatus.next(null);
         this.userData.next(user);
       },error => {
         if (error.status === 401) {
@@ -68,6 +69,8 @@ export class UserService {
 
           if (errorBody.ErrorCode === "user_login_blocked_attempts") {
             this.userStatus.next('attempts');
+          } else if (errorBody.ErrorCode === "captcha_challenge_failed") {
+            this.userStatus.next('captcha');
           } else {
             this.userStatus.next('invalid pass');
           }

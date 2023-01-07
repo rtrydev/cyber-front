@@ -1,0 +1,36 @@
+<div class="captcha-border p-3 mb-2 shadow">
+  <div *ngIf="captchaData && !captchaValidState">
+    <p class="text-white text-center w-75 center">
+      Verify that you are a human by selecting the image that is missing from the original one.
+    </p>
+    <p *ngIf="captchaFailed" style="color: red" class="text-center">
+      This is not a correct image, please try again.
+    </p>
+    <div *ngIf="isDuringCheck" class="center" style="width: fit-content;">
+      <span class="text-white" style="position: relative; bottom: 0.125rem">Checking </span>
+      <div style="width: 1rem; height: 1rem" class="spinner-border text-white" role="status"></div>
+    </div>
+    <div class="d-flex justify-content-center m-2 center" style="width: 1024px">
+      <img width="512px" height="512px" src="{{captchaImg}}">
+      <div style="width: 512px; margin-left: auto; margin-right: auto">
+        <div class="d-flex justify-content-center flex-wrap" style="margin-right: -1.5rem">
+          <div [ngClass]="!isDuringCheck ? 'captcha-select-image' : ''" style="width: 110px; background-color: #dddddd" class="m-2" *ngFor="let img of captchaOptions">
+            <img [ngStyle]="{'opacity': isDuringCheck ? '0.5' : '1'}" (click)="selectPiece(img.index)" width="110px" height="110px" src="{{img.image}}">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!captchaData && !captchaValidState">
+    <div class="spinner-border text-white" role="status"></div>
+  </div>
+  <div *ngIf="captchaValidState">
+    <span class="text-white">Captcha: </span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="#198754" class="bi bi-check" viewBox="0 0 16 16">
+      <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+    </svg>
+  </div>
+</div>
+
+
+

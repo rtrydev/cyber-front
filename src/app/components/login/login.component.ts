@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ILoginData} from "../../interfaces/ILoginData";
-import {stat} from "fs";
+import {CaptchaService} from "../../services/captcha.service";
+import {CaptchaComponent} from "../captcha/captcha.component";
 
 @Component({
   selector: 'app-login',
@@ -13,11 +14,15 @@ export class LoginComponent implements OnInit {
 
   isInvalidEmail = false;
   expired = false;
-
   isInvalidPassword = false;
   isBlocked = false;
-
   isTooManyAttempts = false;
+  captchaNotCompleted = false;
+  currentCaptchaChallengeId: string | null = null;
+  @ViewChild("captcha")
+  captchaComponent: CaptchaComponent | undefined;
+
+
 
   public loginForm = this.formBuilder.group({
     login: ['', Validators.required],
@@ -25,7 +30,7 @@ export class LoginComponent implements OnInit {
     singleTimePassword: ['']
   })
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private captchaService: CaptchaService) { }
 
   ngOnInit(): void {
     this.userService.userStatus.next(null);
@@ -35,7 +40,21 @@ export class LoginComponent implements OnInit {
       this.isInvalidPassword = status === 'invalid pass';
       this.isBlocked = status === 'blocked';
       this.isTooManyAttempts = status === 'attempts';
+
+      if (status === 'captcha') {
+        this.captchaComponent?.resetCaptcha();
+      }
     });
+
+    this.captchaService.currentCaptchaChallengeId
+      .subscribe(value => {
+        this.currentCaptchaChallengeId = value;
+      });
+
+    this.captchaService.captchaCompleted
+      .subscribe(value => {
+        this.captchaNotCompleted = !value;
+      });
   }
 
   submit() {
@@ -56,7 +75,8 @@ export class LoginComponent implements OnInit {
       login: this.loginForm.get('login')?.value,
       password: isSinglePassword
       ? Number(this.loginForm.get('singleTimePassword')?.value)
-      : this.loginForm.get('password')?.value
+      : this.loginForm.get('password')?.value,
+      captchaChallengeId: this.currentCaptchaChallengeId
     } as ILoginData;
 
     this.userService.login(loginData, isSinglePassword);
