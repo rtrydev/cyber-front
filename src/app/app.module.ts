@@ -24,6 +24,7 @@ import { UserEditComponent } from './components/admin/user-edit/user-edit.compon
 import { ReportingViewComponent } from './components/admin/reporting-view/reporting-view.component';
 import { ConfigComponent } from './components/admin/config/config.component';
 import { RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
+import { CaptchaComponent } from './components/captcha/captcha.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -50,7 +51,8 @@ const routes: Routes = [
     ArticleHeaderComponent,
     UserEditComponent,
     ReportingViewComponent,
-    ConfigComponent
+    ConfigComponent,
+    CaptchaComponent
   ],
   imports: [
     BrowserModule,

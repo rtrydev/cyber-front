@@ -1,0 +1,14 @@
+.captcha-border {
+  outline-style: solid;
+  outline-color: white;
+  outline-width: thin;
+  border-radius: 0.375rem;
+  background: #212529;
+}
+
+.captcha-select-image:hover {
+  cursor: pointer;
+  outline-style: solid;
+  outline-color: white;
+  outline-width: medium;
+}

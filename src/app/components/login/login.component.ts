@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ILoginData} from "../../interfaces/ILoginData";
-import {stat} from "fs";
-import {CaptchaService} from "../../services/captcha.service";
 
 @Component({
   selector: 'app-login',
@@ -18,8 +16,7 @@ export class LoginComponent implements OnInit {
   isBlocked = false;
   isTooManyAttempts = false;
 
-  captchaData: any = null;
-  captchaImg: any = null;
+
 
   public loginForm = this.formBuilder.group({
     login: ['', Validators.required],
@@ -27,7 +24,7 @@ export class LoginComponent implements OnInit {
     singleTimePassword: ['']
   })
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private captchaService: CaptchaService) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
     this.userService.userStatus.next(null);
@@ -37,18 +34,6 @@ export class LoginComponent implements OnInit {
       this.isInvalidPassword = status === 'invalid pass';
       this.isBlocked = status === 'blocked';
       this.isTooManyAttempts = status === 'attempts';
-    });
-
-    this.captchaService.getCaptcha().subscribe(result => {
-      this.captchaData = JSON.parse(result);
-
-      fetch("data:image/jpg;base64," + this.captchaData.big_img)
-        .then(res => res.blob())
-        .then(blob => {
-          this.captchaImg = URL.createObjectURL(blob);
-          console.log(blob);
-          console.log(this.captchaImg);
-        })
     });
   }
 
