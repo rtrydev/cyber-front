@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ILoginData} from "../../interfaces/ILoginData";
+import {CaptchaService} from "../../services/captcha.service";
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,8 @@ export class LoginComponent implements OnInit {
   isInvalidPassword = false;
   isBlocked = false;
   isTooManyAttempts = false;
+  captchaNotCompleted = false;
+  currentCaptchaChallengeId: string | null = null;
 
 
 
@@ -24,7 +27,7 @@ export class LoginComponent implements OnInit {
     singleTimePassword: ['']
   })
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private captchaService: CaptchaService) { }
 
   ngOnInit(): void {
     this.userService.userStatus.next(null);
@@ -35,6 +38,16 @@ export class LoginComponent implements OnInit {
       this.isBlocked = status === 'blocked';
       this.isTooManyAttempts = status === 'attempts';
     });
+
+    this.captchaService.currentCaptchaChallengeId
+      .subscribe(value => {
+        this.currentCaptchaChallengeId = value;
+      });
+
+    this.captchaService.captchaCompleted
+      .subscribe(value => {
+        this.captchaNotCompleted = !value;
+      });
   }
 
   submit() {
@@ -55,7 +68,8 @@ export class LoginComponent implements OnInit {
       login: this.loginForm.get('login')?.value,
       password: isSinglePassword
       ? Number(this.loginForm.get('singleTimePassword')?.value)
-      : this.loginForm.get('password')?.value
+      : this.loginForm.get('password')?.value,
+      captchaChallengeId: this.currentCaptchaChallengeId
     } as ILoginData;
 
     this.userService.login(loginData, isSinglePassword);

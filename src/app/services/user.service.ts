@@ -68,6 +68,8 @@ export class UserService {
 
           if (errorBody.ErrorCode === "user_login_blocked_attempts") {
             this.userStatus.next('attempts');
+          } else if (errorBody.ErrorCode === "captcha_challenge_failed") {
+            this.userStatus.next('captcha');
           } else {
             this.userStatus.next('invalid pass');
           }
