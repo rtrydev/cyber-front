@@ -47,6 +47,7 @@ export class UserService {
 
         localStorage.setItem("user", JSON.stringify(user));
 
+        this.userStatus.next(null);
         this.userData.next(user);
       },error => {
         if (error.status === 401) {

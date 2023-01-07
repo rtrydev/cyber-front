@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../../services/user.service";
 import {ILoginData} from "../../interfaces/ILoginData";
 import {CaptchaService} from "../../services/captcha.service";
+import {CaptchaComponent} from "../captcha/captcha.component";
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,8 @@ export class LoginComponent implements OnInit {
   isTooManyAttempts = false;
   captchaNotCompleted = false;
   currentCaptchaChallengeId: string | null = null;
+  @ViewChild("captcha")
+  captchaComponent: CaptchaComponent | undefined;
 
 
 
@@ -37,6 +40,10 @@ export class LoginComponent implements OnInit {
       this.isInvalidPassword = status === 'invalid pass';
       this.isBlocked = status === 'blocked';
       this.isTooManyAttempts = status === 'attempts';
+
+      if (status === 'captcha') {
+        this.captchaComponent?.resetCaptcha();
+      }
     });
 
     this.captchaService.currentCaptchaChallengeId

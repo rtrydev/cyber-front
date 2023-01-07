@@ -20,6 +20,7 @@ export class CaptchaService {
       .pipe(
         map(result => {
           this.currentCaptchaChallengeId.next(result.id);
+          this.captchaCompleted.next(false);
           return result
         })
       )

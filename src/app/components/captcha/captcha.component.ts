@@ -43,6 +43,16 @@ export class CaptchaComponent implements OnInit {
       });
   }
 
+  public resetCaptcha() {
+    this.isDuringCheck = false;
+    this.checkedIndex = -1;
+    this.captchaValidState = false;
+    this.captchaFailed = false;
+    this.captchaData = null;
+
+    this.loadCaptcha();
+  }
+
   private loadCaptcha() {
     this.captchaService.getCaptcha().subscribe(result => {
       this.captchaData = result as ICaptchaData;
