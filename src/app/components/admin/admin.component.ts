@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Roles} from "../../enums/roles";
 import {IUserAccount} from "../../interfaces/IUserAccount";
-import {environment} from "../../../environments/environment.prod";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-admin',
