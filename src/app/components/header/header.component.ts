@@ -33,7 +33,6 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/user-settings']);
         return;
       }
-      this.router.navigate(['/']);
     });
 
     this.userService.loginFromToken();
