@@ -21,6 +21,12 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.userData.subscribe(user => {
+      if (!user) {
+        this.userRole = null;
+        this.isAdmin = false;
+        return;
+      }
+
       this.isAdmin = false;
 
       this.userRole = user?.role ?? null;
@@ -33,6 +39,7 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/user-settings']);
         return;
       }
+      this.router.navigate(['/']);
     });
 
     this.userService.loginFromToken();
