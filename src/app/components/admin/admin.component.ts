@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {Roles} from "../../enums/roles";
 import {IUserAccount} from "../../interfaces/IUserAccount";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-admin',
@@ -22,6 +23,7 @@ export class AdminComponent implements OnInit {
   ];
 
   selectedTab = 'ACCOUNT_MANIPULATION';
+  canaryToken = environment.canaryToken;
 
   isAdmin = false;
 
@@ -30,7 +32,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.userData.subscribe(user => {
-      this.isAdmin = user && user.role === Roles.Admin || true;
+      this.isAdmin = user && user.role === Roles.Admin || false;
     });
   }
 

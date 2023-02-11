@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import {RouterModule, Routes} from "@angular/router";
 import { LoginComponent } from './components/login/login.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AdminComponent } from './components/admin/admin.component';
@@ -26,13 +25,7 @@ import { ConfigComponent } from './components/admin/config/config.component';
 import { RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
 import { CaptchaComponent } from './components/captcha/captcha.component';
 
-const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'user-settings', component: UserSettingsComponent },
-  { path: 'password-reset', component: PasswordResetComponent }
-];
+
 
 @NgModule({
   declarations: [
@@ -57,16 +50,12 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(routes),
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     HttpClientModule,
     RecaptchaFormsModule,
     RecaptchaModule
-  ],
-  exports: [
-    RouterModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
